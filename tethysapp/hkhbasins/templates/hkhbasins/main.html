@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load staticfiles %}
+{% csrf_token %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamFlow Prediction | HKH river basins</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Condensed" rel="stylesheet">
+
+
+    <link href="/static/{{ TethysAppName }}/css/Version4bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/glyphicons.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/ol.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/bootstrap-slider.min.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/threddsDataserverMinified.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/jquery-ui.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/MonthPicker.min.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/CustomStylesMonthPicker.css" rel="stylesheet"/>
+
+    <link href="/static/{{ TethysAppName }}/css/Content/Site.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/Content/cssPlugin/soil.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/ol-ext.min.css" rel="stylesheet"/>
+
+    <link href="/static/{{ TethysAppName }}/css/main.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/layerUIWithSlider.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/styles.css" rel="stylesheet"/>
+    <link href="/static/{{ TethysAppName }}/css/Content/cssPlugin/lapis.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+<div class="banner">
+    <h3 class="banner-heading">Streamflow Prediction Tool - HKH river basins</h3>
+    <div class="logos pull-right">
+        <img src="/static/{{ TethysAppName }}/css/Content/icons/logo-icimod.png"
+             style="height: 35px;margin-top: 16px;"/>
+    </div>
+</div>
+
+<div class="container-fluid main-container"> <!--has-toolbar -->
+    <div class="row full-height">
+        <!--MIDDLE-->
+        <!-- Map Section -->
+        <div class="col-md-10 full-height">
+            <div id="map-section" class="row full-height">
+                <div class="col-md-12 colpad padtop padbottom" style="padding-right:0;">
+                    <div class="panel" style="height:100%;padding:10px;">
+                        <div id="map"></div>
+                        <!-- Image loader -->
+                            <div id='loader'>
+                              <img class= "loaderImg" src="/static/{{ TethysAppName }}/images/loader.gif">
+                            </div>
+                        <!-- Image loader -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--LAST-->
+        <div class="col-md-2 full-height">
+            <!--Legend section-->
+            <div class="row top-row full-height">
+                <div class="col-md-12 colpad padtop col-mob-off">
+                    <div class="panel" style="height:100%">
+                        <div class="panel-heading padding-top-6">
+                            <h4 class="panel-title full-width layer-heading">
+                                Layers
+                            </h4>
+                        </div>
+                        <div class="layer-div">
+                            <div class="layerCollection"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--Information section-->
+            </div>
+
+            <div class="row bot-row">
+                <div class="col-md-12 colpad padtop padbottom ">
+                    <div class="panel" style="height:100%;">
+                        <div class="panel-heading padding-top-6">
+                            <h4 class="panel-title full-width layer-heading">
+                                About Streamflow Prediction Tool
+                                <a href="#"><img
+                                        src="/static/{{ TethysAppName }}/css/Content/icons/app_icon_about.png"
+                                        style="float:right;height:20px;width:auto;" data-toggle="modal"
+                                        data-target="#aboutModal"></a>
+                            </h4>
+                        </div>
+                        <div class="panel-body" style="height:calc(100% -  40px);overflow:auto;">
+                            <div style="text-align:justify;">
+                                <b>Description:</b><br>
+                                The Streamflow Prediction Tool for the HKH river basins provides 10-day streamflow
+                                forecasts for major rivers within the Amu Darya, Brahmaputra, Ganges and Indus basins
+                                in the Hindu Kush Himalayan (HKH) region.
+                            </div>
+                            <div class="form-group" style="margin-top:5px;">
+                                <a href="#" data-toggle="modal" data-target="#aboutModal"><span
+                                        style="font-weight:bold;">View More...</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="aboutModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Streamflow Prediction Tool - HKH river basins</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="contributor">
+                        <img src="/static/{{ TethysAppName }}/css/Content/images/USAIDlogo.png">
+                        <img src="/static/{{ TethysAppName }}/css/Content/images/NASA_LOGO.png" style="height:50px;">
+                        <img src="/static/{{ TethysAppName }}/css/Content/images/icimod.png"
+                             style="height:54px;margin-top:10px;">
+                        <img src="/static/{{ TethysAppName }}/css/Content/images/Servir_HKH green.png"
+                             style="height:30px;">
+                    </div>
+                    <div class="other-detail">
+                        <div style="overflow:auto;height:100%;">
+                            <h5><b class="info">Description</b></h5>
+                            <p class="info">
+                                The Streamflow Prediction Tool for the HKH river basins provides 10-day streamflow
+                                forecasts for major rivers within the Amu Darya, Brahmaputra, Ganges and Indus basins in
+                                the Hindu Kush Himalayan (HKH) region. Each river segment displayed in the map is assigned
+                                a unique identifier. Users can click on a particular river segment to display 10-day
+                                streamflow forecasts for the river stretch.
+                            </p>
+                            <p class="info">
+                                This tool can be used as part of the decision support system for flood forecasting
+                                services and can assist decision makers and managers to provide flood early warnings and
+                                response during extreme events.
+                            </p>
+                            <p class="info">
+                                Each river segment displayed in the map interface is colour-coded daily to indicate
+                                streamflow in the segment with respect to flood return periods.
+                            </p>
+                            <p class="info">
+                                <ul>
+                                    <li class="info">Red indicates river flow > 100-year return period</li>
+                                    <li class="info">Brown indicates river flow > 50-year return period</li>
+                                    <li class="info">Orange indicates river flow > 25-year return period</li>
+                                    <li class="info">Yellow indicates river flow > 10-year return period</li>
+                                    <li class="info">Light blue indicates river flow > 5-year return period</li>
+                                    <li class="info">Blue indicates river flow > 2-year return period</li>
+                                    <li class="info">Dark Blue indicates river flow <= 2-year return period</li>
+                                </ul>
+                                <p>
+                                    Rivers with streamflow exceeding the threshold for higher return periods are likely
+                                    to experience flooding.
+                                </p>
+                            </p>
+                            <p class="info">
+                                The Streamflow Prediction Tool provides predicted estimates by using runoff predictions
+                                from the <a href="https://www.ecmwf.int/" target="_blank"> European Center for Medium Range Weather Forecasts (ECMWF) </a> routed through the
+                                Routing Application for <a href="https://github.com/c-h-david/rapid" target="_blank">Parallel Computation of Discharge (RAPID) model </a>. The connection
+                                between the predicted and hind-casted runoffs is generated using different proprietary
+                                and open-source GIS tools.
+                            </p>
+                            <p class="info">
+                                The Streamflow Prediction Tool was developed at <a href="https://www.byu.edu/" target="_blank">Brigham Young University (BYU) </a> with support
+                                from the <a href="https://www.nsf.gov/" target="_blank">National Science Foundation (NSF)</a>. ICIMOD’s SERVIR Hindu Kush Himalaya (SERVIR-HKH)
+                                Initiative worked together with BYU to develop a customized Streamflow Prediction Tool for
+                                the region. The tool has been further customised for
+                                <a href="http://tethys.icimod.org/apps/streamflowbangladesh/" target="_blank">Bangladesh</a>,
+                                <a href="http://tethys.icimod.org/apps/streamflowbhutan/" target="_blank">Bhutan</a>,
+                                <a href="http://tethys.icimod.org/apps/streamflownepal/" target="_blank">Nepal</a>,
+                                <a href="http://tethys.icimod.org/apps/streamflowpakistan/" target="_blank">Pakistan</a> and
+                                <a href="http://tethys.icimod.org/apps/streamflowhkh/" target="_blank">HKH region</a>
+                            </p>
+                            <p class="info">
+                                The tool is built on Tethys, an open-source framework for developing web-based applications
+                                for Earth observation. Observational data from selected stations are being used for forecast
+                                verification for national-level tools.
+                            </p>
+
+                            <h5><b class="info">Analytical tools</b></h5>
+                            <p class="info">
+                                The web application displays the following layers:
+                            </p>
+                            <ul>
+                                <li class="info">Amu Darya Basin</li>
+                                <li class="info">Brahmaputra Basin</li>
+                                <li class="info">Ganges Basin</li>
+                                <li class="info">Indus Basin</li>
+                            </ul>
+
+                            <p class="info">
+                                Users can view the following parameters upon clicking on any river stretch:
+                            </p>
+                            <ul>
+                                <li class="info">Forecast (10-day): Forecast information is generated from 52 ensemble
+                                    forecasts and shows the average, upper, and lower standard deviations; the maximum
+                                    and minimum flows; and a single higher resolution forecast (black line). The references
+                                    can be seen on the right, and the different layers can be turned on and off. The
+                                    different background colours in the graph represent the flow magnitude between defined return periods.
+                                </li>
+                                <li class="info">User can further interact with adjoining tabs to access the following information:</li>
+                                <ul>
+                                    <li class="info"><b>Historical:</b> This tab displays a graph of simulated historical flows from 1980.</li>
+                                    <li class="info"><b>Flow-duration:</b> This tab shows information on flow reliability.</li>
+                                    <li class="info">This tab allows users to download the forecast data and ERA-Interim data as a downloadable CSV file.</li>
+                                </ul>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Chart Modal -->
+
+    <div class="modal fade" id="graph" tabindex="-1" role="dialog" aria-labelledby="about-modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document" style="width:75%;">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    {# <h5 class="modal-title" id="about-modal-label">Modal title</h5>#}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <nav>
+                        <div class="nav nav-tabs" id="graphTab" role="tablist">
+
+                            <a class="nav-item nav-link active" id="forecast_tab_link" data-toggle="tab"
+                               href="#forecast_tab"
+                               role="tab" aria-controls="forecast_tab" aria-selected="true">Forecast</a>
+
+                            <a class="nav-item nav-link" id="historical_tab_link" data-toggle="tab" href="#historical"
+                               role="tab" aria-controls="historical" aria-selected="false">Historical</a>
+
+                            <a class="nav-item nav-link" id="flow_duration_tab_link" data-toggle="tab"
+                               href="#flow_duration"
+                               role="tab" aria-controls="flow_duration" aria-selected="false">Flow-Duration</a>
+
+                            <a class="nav-item nav-link" id="download_tab_link" data-toggle="tab" href="#download"
+                               role="tab" aria-controls="download" aria-selected="false">Downloads</a>
+
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="forecast_tab" role="tabpanel"
+                             aria-labelledby="forecast_tab_link">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="flex-container-row"><img id="view-file-loading" class="view-file hidden"
+                                                                         src="/static/{{ TethysAppName }}/images/loader.gif"/>
+                                    </div>
+                                    <div id="long-term-chart">
+
+                                    </div>
+                                    <table id="mytable">
+                                        <tbody id="tbody">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="historical" role="tabpanel"
+                             aria-labelledby="historical_tab_link">
+                            <div class="panel panel-default">
+                                <div class="flex-container-row"><img id="his-view-file-loading" class="view-file hidden"
+                                                                     src="/static/{{ TethysAppName }}/images/loader.gif"/>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="historical-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="flow_duration" role="tabpanel"
+                             aria-labelledby="flow_duration_tab_link">
+                            <div class="panel panel-default">
+                                <div class="flex-container-row"><img id="fdc-view-file-loading" class="view-file hidden"
+                                                                     src="/static/{{ TethysAppName }}/images/loader.gif"/>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="fdc-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="download" role="tabpanel" aria-labelledby="download_tab_link">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h6>Download Forecast Data (Time Zone: UTC)</h6>
+                                    <div id="download_forecast" class="btn-group long-term-select" role="group">
+                                        <a class="btn btn-success" role="button" id="submit-download-forecast">
+                                            <span class="glyphicon glyphicon-play"></span> Download Forecast
+                                        </a>
+                                    </div>
+                                    <h6>Download ERA Interim Data (Time Zone: UTC)</h6>
+                                    <div id="download_interim" class="btn-group" role="group">
+                                        <a class="btn btn-info" role="button" id="submit-download-interim-csv">
+                                            <span class="glyphicon glyphicon-play"></span> Download Interim Data
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="info" class="hidden"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/{{ TethysAppName }}/js/ForBootstrapjquery-3.5.1.slim.min.js"></script>
+<script src="/static/{{ TethysAppName }}/js/jquery-3.3.1.min.js"></script>
+<script src="/static/{{ TethysAppName }}/js/ForBootstrapPopper.min.js"></script>
+<script src="/static/{{ TethysAppName }}/js/Version4bootstrap.min.js"></script>
+<script src="/static/{{ TethysAppName }}/js/bootstrap-slider.min.js"></script>
+<script src="/static/{{ TethysAppName }}/js/ol.js"></script>
+<script src="/static/{{ TethysAppName }}/js/iso8601.js"></script>
+<script src="/static/{{ TethysAppName }}/js/timeDimensionThreddsDataServer.js"></script>
+<script src="/static/{{ TethysAppName }}/js/plotly-latest.min.js"></script>
+<script src="/static/{{ TethysAppName }}/js/ol-ext.min.js"></script>
+
+<script>
+    let TethysAppName = "{{ TethysAppName }}";
+</script>
+<script src="/static/{{ TethysAppName }}/js/data.js"></script>
+<script src="/static/{{ TethysAppName }}/js/main.js"></script>
+
+</body>
+</html>
+
